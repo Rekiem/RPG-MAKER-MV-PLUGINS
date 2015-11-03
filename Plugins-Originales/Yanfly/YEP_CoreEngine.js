@@ -1,7 +1,6 @@
 //=============================================================================
 // Yanfly Engine Plugins - Core Engine
 // YEP_CoreEngine.js
-// Traduccion al espanol - Rekiem
 //=============================================================================
 
 var Imported = Imported || {};
@@ -12,436 +11,439 @@ Yanfly.Core = Yanfly.Core || {};
 
 //=============================================================================
 /*:
- * @plugindesc v1.04 Necesario para la mayor parte de Engine Yanfly. Tambien contiene correcciones de bugs del RPG Maker.
- * @author Yanfly Engine Plugins (es)
+ * @plugindesc v1.04 Needed for the majority of Yanfly Engine Scripts. Also
+ * contains bug fixes found inherently in RPG Maker.
+ * @author Yanfly Engine Plugins
  *
  * @param ---Screen---
  * @default
  *
  * @param Screen Width
- * @desc Ajuste el ancho de la pantalla.
- * Por defecto: 816
+ * @desc Adjusts the width of the screen.
+ * Default: 816
  * @default 816
  *
  * @param Screen Height
- * @desc Ajuste el alto de la pantalla.
- * Por defecto: 624
+ * @desc Adjusts the height of the screen.
+ * Default: 624
  * @default 624
  *
  * @param Scale Battlebacks
- * @desc Deseas que el fondo de batalla se ajuste a la pantalla?
- * NO - false     SI - true
+ * @desc Do you wish to scale battlebacks to resolution?
+ * NO - false     YES - true
  * @default true
  *
  * @param Scale Title
- * @desc Deseas que el fondo del titulo se ajuste a la pantalla?
- * NO - false     SI - true
+ * @desc Do you wish to scale the title screen to resolution?
+ * NO - false     YES - true
  * @default true
  *
  * @param Open Console
- * @desc Para propositos de prueba y depuracion, esto abre la consola.
- * No abrir - false     Abrir - true
+ * @desc For testing and debug purposes, this opens up the console.
+ * Don't Open - false     Open - true
  * @default false
  *
  * @param Reposition Battlers
- * @desc Permitir que el plugin reubique los combatientes segun la resolucion de la pantalla?     NO - false  SI - true
+ * @desc Allow the plugin to reposition battlers to resolution?
+ * NO - false     YES - true
  * @default true
  *
- * @param ---Gold (Oro)---
+ * @param ---Gold---
  * @desc
  *
  * @param Gold Max
- * @desc La maxima cantidad de oro que el jugador puede tener.
- * Por defecto: 99999999
+ * @desc The maximum amount of gold the player can have.
+ * Default: 99999999
  * @default 99999999
  *
  * @param Gold Font Size
- * @desc El tamano de la fuente utilizado para mostrar el oro.
- * Por defecto: 28
+ * @desc The font size used to display gold.
+ * Default: 28
  * @default 20
  *
  * @param Gold Icon
- * @desc Este sera el icono utilizado para representar el oro en la ventana. Si se deja en 0, Ningun icono sera mostrado.
+ * @desc This will be the icon used to represent gold in the gold
+ * window. If left at 0, no icon will be displayed.
  * @default 313
  *
  * @param Gold Overlap
- * @desc Esto se mostrara si el numero de oro excede el tamano del area del contenido dado.
+ * @desc This will be what's displayed when the gold number
+ * exceeds the allocated area's content size.
  * @default A lotta
  *
- * @param ---Items (Objetos)---
+ * @param ---Items---
  * @desc
  *
  * @param Default Max
- * @desc Este es el maximo numero de items que el personaje puede tener.	Por defecto: 99
+ * @desc This is the maximum number of items a player can hold.
+ * Default: 99
  * @default 99
  *
  * @param Quantity Text Size
- * @desc Este es el tamano de la fuente del texto usado para la cantidad de items.	  Por defecto: 28
+ * @desc This is the text's font size used for the item quantity.
+ * Default: 28
  * @default 20
  *
- * @param ---Stats(Estadisticas)---
+ * @param ---Stats---
  * @default
  *
  * @param Max Level
- * @desc Ajusta el limite maximo de nivel para los personajes.
- * Por defecto: 99
+ * @desc Adjusts the maximum level limit for actors.
+ * Default: 99
  * @default 99
  *
  * @param Actor MaxHP
- * @desc Ajusta el limite maximo de HP para los personajes.
- * Por defecto: 9999
+ * @desc Adjusts the maximum HP limit for actors.
+ * Default: 9999
  * @default 9999
  *
  * @param Actor MaxMP
- * @desc Ajusta el limite maximo de MP para los personajes.
- * Por defecto: 9999
+ * @desc Adjusts the maximum MP limit for actors.
+ * Default: 9999
  * @default 9999
  *
  * @param Actor Parameter
- * @desc Ajusta el limite maximo de parametros para los personajes.
- * Por defecto: 999
+ * @desc Adjusts the maximum parameter limit for actors.
+ * Default: 999
  * @default 999
  *
  * @param Enemy MaxHP
- * @desc Ajusta el limite maximo de HP para los enemigos.
- * Por defecto: 999999
+ * @desc Adjusts the maximum HP limit for enemies.
+ * Default: 999999
  * @default 999999
  *
  * @param Enemy MaxMP
- * @desc Ajusta el limite maximo de MP para los enemigos.
- * Por defecto: 9999
+ * @desc Adjusts the maximum MP limit for enemies.
+ * Default: 9999
  * @default 9999
  *
  * @param Enemy Parameter
- * @desc Ajusta el limite maximo de parametros para los enemigos.
- * Por defecto: 999
+ * @desc Adjusts the maximum parameter limit for enemies.
+ * Default: 999
  * @default 999
  *
- * @param ---Battle (Batalla)---
+ * @param ---Battle---
  * @desc
  *
  * @param Animation Rate
- * @desc Ajusta el ritmo de las animaciones en batalla. Menos para mas rapido.	 Por defecto: 4
+ * @desc Adjusts the rate of battle animations. Lower for faster.
+ * Default: 4
  * @default 4
  *
  * @param Flash Target
- * @desc Si un enemigo es objetivo, parpadea o se puede blanquear.
- * APAGADO - false     ENCENDIDO - true
+ * @desc If an enemy is targeted, it flashes or it can whiten.
+ * OFF - false     ON - true
  * @default false
  *
- * @param ---Font (Fuente)---
+ * @param ---Font---
  * @desc
  *
  * @param Chinese Font
- * @desc Fuente(s) por defecto usadas para el RPG Chino.
- * Por defecto: SimHei, Heiti TC, sans-serif
+ * @desc Default font(s) used for a Chinese RPG.
+ * Default: SimHei, Heiti TC, sans-serif
  * @default SimHei, Heiti TC, sans-serif
  *
  * @param Korean Font
- * @desc Fuente(s) por defecto usadas para el RPG Koreano.
- * Por defecto: Dotum, AppleGothic, sans-serif
+ * @desc Default font(s) used for a Korean RPG.
+ * Default: Dotum, AppleGothic, sans-serif
  * @default Dotum, AppleGothic, sans-serif
  *
  * @param Default Font
- * @desc Fuente(s) por defecto para todos los demas.
- * Por defecto: GameFont
+ * @desc Default font(s) used for everything else.
+ * Default: GameFont
  * @default GameFont, Verdana, Arial, Courier New
  *
  * @param Font Size
- * @desc Tamano de letra predeterminado utilizado para las ventanas.	Por defecto: 28
+ * @desc Default font size used for windows.
+ * Default: 28
  * @default 28
  *
  * @param Text Align
- * @desc Como alinear el texto para las ventanas de comando.
- * left(Izquierda)     center(Centro)     right(Derecha)
+ * @desc How to align the text for command windows.
+ * left     center     right
  * @default left
  *
- * @param ---Windows(Ventanas)---
+ * @param ---Windows---
  * @default
  *
  * @param Digit Grouping
- * @desc Agrupa digitos con una coma.
- * false - APAGADO     true - ENCENDIDO
+ * @desc Groups together digits with a comma.
+ * false - OFF     true - ON
  * @default true
  *
  * @param Line Height
- * @desc Ajuste de la altura de la linea universal utilizada en Windows.   Por defecto: 36
+ * @desc Adjusts universal line height used in Windows.
+ * Default: 36
  * @default 36
  *
  * @param Icon Width
- * @desc Ajusta el largo de los iconos.
- * Por defecto: 32
+ * @desc Adjusts the width of your icons.
+ * Default: 32
  * @default 32
  *
  * @param Icon Height
- * @desc Ajusta la altura de los iconos.
- * Por defecto: 32
+ * @desc Adjusts the height of your icons.
+ * Default: 32
  * @default 32
  *
  * @param Face Width
- * @desc Ajusta el largo de las faces(Rostros) de los personajes.
- * Por defecto: 144
+ * @desc Adjusts the width of actors' faces.
+ * Default: 144
  * @default 144
  *
  * @param Face Height
- * @desc Ajusta la altura de las faces(Rostros) de los personajes.
- * Por defecto: 144
+ * @desc Adjusts the height of actors' faces.
+ * Default: 144
  * @default 144
  *
  * @param Window Padding
- * @desc Ajusta el relleno a todas las ventanas estandar. 
- * Por defecto: 18
+ * @desc Adjusts the padding for all standard windows.
+ * Default: 18
  * @default 18
  *
  * @param Text Padding
- * @desc Ajuste el relleno para el texto dentro de las ventanas. 
- * Por defecto: 6
+ * @desc Adjusts the padding for text inside of windows.
+ * Default: 6
  * @default 6
  *
  * @param Window Opacity
- * @desc Ajusta la opacidad del plano de fondo para las ventanas.
- * Por defecto: 192
+ * @desc Adjusts the background opacity for windows.
+ * Default: 192
  * @default 192
  *
  * @param Gauge Outline
- * @desc Habilitar esquemas para los medidores.
- * false - APAGADO     true - ON
+ * @desc Enable outlines for gauges.
+ * false - OFF     true - ON
  * @default true
  *
  * @param Gauge Height
- * @desc Establece la altura de los medidores.
- * Por defecto: 6
+ * @desc Sets the height for gauges.
+ * Default: 6
  * @default 18
  *
  * @param Menu TP Bar
- * @desc Dibuja una barra de TP en el menu de estado para los personajes.	false - APAGADO     true - ENCENDIDO
+ * @desc Draws a TP bar in the menu status for actors.
+ * false - OFF     true - ON
  * @default true
  *
- * @param ---Window Colors(Color de las ventanas)---
+ * @param ---Window Colors---
  * @default
  *
  * @param Color: Normal
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 0
+ * @desc Changes the text color for Windows.
+ * Default: 0
  * @default 0
  *
  * @param Color: System
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 16
+ * @desc Changes the text color for Windows.
+ * Default: 16
  * @default 16
  *
  * @param Color: Crisis
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 17
+ * @desc Changes the text color for Windows.
+ * Default: 17
  * @default 17
  *
  * @param Color: Death
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 18
+ * @desc Changes the text color for Windows.
+ * Default: 18
  * @default 18
  *
  * @param Color: Gauge Back
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 19
+ * @desc Changes the text color for Windows.
+ * Default: 19
  * @default 19
  *
  * @param Color: HP Gauge 1
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 20
+ * @desc Changes the text color for Windows.
+ * Default: 20
  * @default 20
  *
  * @param Color: HP Gauge 2
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 21
+ * @desc Changes the text color for Windows.
+ * Default: 21
  * @default 21
  *
  * @param Color: MP Gauge 1
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 22
+ * @desc Changes the text color for Windows.
+ * Default: 22
  * @default 22
  *
  * @param Color: MP Gauge 2
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 23
+ * @desc Changes the text color for Windows.
+ * Default: 23
  * @default 23
  *
  * @param Color: MP Cost
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 23
+ * @desc Changes the text color for Windows.
+ * Default: 23
  * @default 23
  *
  * @param Color: Power Up
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 24
+ * @desc Changes the text color for Windows.
+ * Default: 24
  * @default 24
  *
  * @param Color: Power Down
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 25
+ * @desc Changes the text color for Windows.
+ * Default: 25
  * @default 25
  *
  * @param Color: TP Gauge 1
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 28
+ * @desc Changes the text color for Windows.
+ * Default: 28
  * @default 28
  *
  * @param Color: TP Gauge 2
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 29
+ * @desc Changes the text color for Windows.
+ * Default: 29
  * @default 29
  *
  * @param Color: TP Cost Color
- * @desc Cambia el color del texto para las ventanas.
- * Por defecto: 29
+ * @desc Changes the text color for Windows.
+ * Default: 29
  * @default 29
  *
  * @help
  * ============================================================================
- * Introduccion e Instrucciones
+ * Introduction and Instructions
  * ============================================================================
  *
- * Yanfly Engine Plugins - Core Engine esta hecho para RPG Maker MV.
- * Este plugin tiene como funcion, principalmente, corregir errores y permitir 
- * al usuario mayor control sobre las varias caracteristicas de RPG MAKER MV,
- * como la resolucion de la pantalla, fuentes, colores de ventanas, y mas.
+ * Yanfly Engine Plugins - Core Engine is made for RPG Maker MV. This plugin
+ * functions primarily to fix bugs and to allow the user more control over RPG
+ * Maker MV's various features, such as the screen resolution, font, window
+ * colors, and more.
  *
- * Solo hay que poner en la parte superior de todos los demas Yanfly Engine 
- * Plugins. Ajuste cualquier parametro como mejor le parezca.
- *
- * ============================================================================
- * Correccion de errores
- * ============================================================================
- *
- * Este plugin soluciona algunos errores encontrados en RPG Maker MV.
- * Algunos de ellos son los siguientes:
- *
- * Animation Overlay (Superposicion de Animacion)
- * Cuando una habilidad/objeto que apunta a multiples enemigos de una vez
- * se utiliza con la animacion en pantalla completa, que cubre multiples 
- * veces causando que la imagen parezca distorsionada por una serie de 
- * efectos cubridores. Este plugin soluciona este problema por tener 
- * apenas una animacion siendo ejecutada sobre un grupo en vez de cada una.
- *
- * Event Updating (Actualizacion de Evento)
- *   Por defecto, un evento movido con Frecuencia 5 se detiene brevemente por 
- *   un frame en vez de moverse continuamente. El plugin soluciona este  
- *   problema para corresponder con las interacciones de RPG Maker XP,  
- *   RPG Maker VX, y RPG Maker VX Ace donde el evento se mueve sin parar.
- *
- * Event Movement Speed (Evento de Velocidad de Movimiento)
- *   La velocidad de movimiento de eventos es levemente mas lenta de lo que 
- *   deberia debido a un pequeno error en el codigo fuente. El plugin soluciona 
- *   este problema y permite que se mueva a la velocidad correcta.
- *
- * Event Movement Queue (Movimiento de eventos en Cola)
- *   Si un evento se moviera a traves de un evento de comando, cambia una 
- *   condicion que establece el evento a mover para una pagina diferente, 
- *   causaria que la ruta de movimiento del evento se detenga. El plugin 
- *   soluciona este problema y la ruta del evento finalizara.
- *
- * Event Colliding (Colision de Evento)
- *   Los eventos no se pueden mover por encima de otros eventos con una 
- *   configuracion por debajo del jugador. Esto hace que sea dificil para 
- *   ciertos tipos de eventos existir. el plugin soluciona este problema al 
- *   hacer la prueba de colision solo aplica para eventos con prioridad  
- *   "Same as Characters". Cualquier evento que este encima o abajo de los 
- *   personajes no entrara en colision con otros eventos.
- *
- * Screen Tearing(Lagrimeo de pantalla)
- *   Cuando se mueve lentamente, los tiles en la pantalla lagrimean. Si bien no 
- *   es perceptible en todos los sistemas, equipos mas lentos definitivamente 
- *   los mostraran. El plugin soluciona este problema y sincroniza los tiles 
- *   para permanecer correctamente en ritmo con el movimiento de la camara 
- *   en la pantalla.
- *
- * Sprite Distortion (Distorsion de Sprite )
- *   Debido a un extrano comportamiento matematico de JavaScript, a veces los 
- *   valores con cifras decimales causan spritesheets que al final se ven 
- *   distorsionados, el plugin se librara de los espacios decimales y que 
- *   tienen sprite sheets sacando frames adecuadamente utilizando solo valores 
- *   enteros.
+ * Just place this on top of all the other Yanfly Engine Plugins.
+ * Adjust any parameters as you see fit.
  *
  * ============================================================================
- * Gold (Oro)
+ * Bug Fixes
  * ============================================================================
  *
- * Puedes usar los comandos del plugin para agregar o remover oro mayor al 
- * limite del editor, que es 9,999,999 limit. Tambien puede agregar tags de 
- * notas en items, armas, y armaduras por encima del limite de coste 999,999
- * 
+ * This plugin fixes a few bugs found present within RPG Maker MV. Of them are
+ * the following:
  *
- * Comandos de plugin:
- *   GainGold 1234567890       # Party gana 1234567890 gold.
- *   LoseGold 9876543210       # Party pierde 9876543210 gold.
+ * Animation Overlay
+ *   When a skill/item that targets multiple enemies at once using a fullscreen
+ *   animation, it will overlay multiple times causing the image to look
+ *   distorted by a series of overlayed effects. The plugin fixes this issue by
+ *   having only one animation played over the group instead of every one.
  *
- *  Notetags de Item, Arma, y Armadura 
+ * Event Updating
+ *   By default, a moving event at Frequency 5 stops briefly for a frame
+ *   instead of continuously moving. The plugin fixes this issue to match the
+ *   previous iterations of RPG Maker XP, RPG Maker VX, and RPG Maker VX Ace
+ *   where the event will move nonstop.
+ *
+ * Event Movement Speed
+ *   The movement speed of events are slightly slower than what they should be
+ *   due a small error in the source code. The plugin fixes this issue and they
+ *   move at the properly speed.
+ *
+ * Event Movement Queue
+ *   If an event were to move through an event command, changing a condition
+ *   that would set the event to change to a different page would cause that
+ *   event's move route to halt in its tracks. The plugin fixes this issue and
+ *   the event's move route will finish.
+ *
+ * Event Colliding
+ *   Events cannot move over other events with a Below Player setting. This
+ *   makes it difficult for certain types of puzzles or events to exist. This
+ *   plugin fixes this issue by making the collision check only apply to events
+ *   of "Same as Characters" priority. Any event that's above or below the
+ *   characters will no longer collide with other events.
+ *
+ * Screen Tearing
+ *   When moving slowly, the tiles on the screen tear. While it's not
+ *   noticeable on all systems, slower computers will definitely show it. The
+ *   plugin will fix this issue and synch the tiles to keep up to pace with
+ *   the screen's camera movement properly.
+ *
+ * Sprite Distortion
+ *   Because of JavaScript's strange mathematical behavior, sometimes values
+ *   with decimal places cause spritesheets to end up looking distorted. The
+ *   plugin will get rid of the decimal places and have sprite sheets take out
+ *   frames properly by using integer values only.
+ *
+ * ============================================================================
+ * Gold
+ * ============================================================================
+ *
+ * You can use the plugin commands to add or remove gold more than the
+ * editor's 9,999,999 limit. You can also place notetags into items, weapons,
+ * and armors to over the 999,999 cost limit.
+ *
+ * Plugin Command:
+ *   GainGold 1234567890       # Party gains 1234567890 gold.
+ *   LoseGold 9876543210       # Party loses 9876543210 gold.
+ *
+ * Item, Weapon, Armor Notetags
  *   <Price: x>
- *   Cambia el precio del articulo a x. Esta etiqueta le permite ignorar el 
- *   limite de costo de oro del editor, que es 999,999.
+ *   Changes the price of the item to x. This notetag allows you to bypass the
+ *   editor's 999,999 gold cost limit.
  *
- * Enemy Notetag(Etiqueta Enemigo)
+ * Enemy Notetag
  *   <Gold: x>
- *  Cambia el valor del la caida de oro al enemigo x. Esta etiqueta le permite 
- *  que usted igonore el limite de caida de oro del editor, que es 9,999,999.
+ *   Changes the gold drop value of enemies to x. This notetag allows you to
+ *   bypass the editor's 9,999,999 gold drop limit.
  *
  * ============================================================================
- * Items (Objetos)
+ * Items
  * ============================================================================
  *
- * Cambia los parametros para reflejar el numero maximo de items de un 
- * jugador que puede tener por item. Si quieres hacer que los items 
- * individuales tengan diferentes valores maximos,
- * usa la siguiente etiqueta:
+ * Change the parameters to reflect the maximum number of items a player can
+ * hold per item. If you wish to make individual items have different max
+ * values, use the following notetag:
  *
- * Notetag de Item, Arma, y Armadura::
+ * Item, Weapon, Armor Notetag:
  *   <Max Item: x>
- *   Esto cambia el cantidad maxima del item a x.
+ *   This changes the maximum amount of the item to x.
  *
  * ============================================================================
- * Stats (Estadisticas)
+ * Stats
  * ============================================================================
  *
- * Incluso con los limites de los parametros aumentados, el editor todavia 
- * esta confinado para el limite de patrones por defecto de RPG Maker MV. 
- * Para pasar por ellos, use las siguientes etiquetas para permitir
- * mas control sobre los aspectos individuales para los parametros.
+ * Even with the parameter limits raised, the editor is still confined to RPG
+ * Maker MV's default limits. To break past them, use the following notetags
+ * to allow further control over the individual aspects for the parameters.
  *
- * Actor Notetag(Etiqueta de actor)
+ * Actor Notetag
  *   <Initial Level: x>
- *  Cambia el nivel inicial del actor a x. Esto le permite ignorar el
- *   limite de nivel del editor, que es 99.
+ *   Changes the actor's initial level to x. This allows you to bypass the
+ *   editor's level 99 limit.
  *
  *   <Max Level: x>
- *   Cambia el nivel maximo del actor a x. Esto le permite ignorar el nivel
- *   limite del editor, que es 99.
+ *   Changes the actor's max level to x. This allows you to bypass the editor's
+ *   level 99 limit.
  *
- * Class Skill Learn Notetag (Etiqueta aprender habilidad de clase)
- * <Learn at Level: x>
- * Cuando se coloca adentro de una etiqueta de clase "Habilidad para Aprender",
- * esto causara que la clase para aprender la habilidad sea de nivel x.
+ * Class Skill Learn Notetag
+ *   <Learn at Level: x>
+ *   When placed inside a class's "Skills to Learn" notetag, this will cause
+ *   the class to learn the skill at level x.
  *
- * Weapon and Armor Notetags (Etiqueta de Arma y Armadura)
+ * Weapon and Armor Notetags
  *   <stat: +x>
  *   <stat: -x>
- *  Permite a la pieza de arma o armadura ganar o perder x cantidad de estatus.
- *  Reemplaza "stat" por "hp", "mp", "atk", "def", "mat", "mdf", "agi", o
- *  "luk" para alterar el estado especifico. Esto permite a la pieza de 
- *  equipamento ir mas alla de la limitacion por defecto del editor siempre 
- *  y cuando el valor maximo lo permita.
+ *   Allows the piece of weapon or armor to gain or lose x amount of stat.
+ *   Replace "stat" with "hp", "mp", "atk", "def", "mat", "mdf", "agi", or
+ *   "luk" to alter that specific stat. This allows the piece of equipment
+ *   to go past the editor's default limitation so long as the maximum value
+ *   allows for it.
  *
- * Enemy Notetags (Etiqueta de Enemigo)
+ * Enemy Notetags
  *   <stat: x>
- *   Esto cambia los status del enemigo por x cantidad. Sustituya "stat" 
- *   por "hp", "mp", "atk", "def", "mat", "mdf", "agi", o "luk" para alterar 
- *   el estado especifico. Esto permite a la pieza de equipamento ir mas alla 
- *   de la limitacion por defecto del editor.
+ *   This changes the enemy's stat to x amount. Replace "stat" with "hp",
+ *   "mp", "atk", "def", "mat", "mdf", "agi", or "luk" to alter that
+ *   specific stat. This allows the piece of equipment to go past the
+ *   editor's default limitation.
  *
  *   <exp: x>
- *   Esto cambia la exp dada por el enemigo por x cantidad. Esto permite que el
- *   enemigo de mas exp que el limite por defecto del editor, que es 9,999,999.
+ *   This changes the enemy's exp given out to x amount. This allows the
+ *   enemy give out more exp than the editor's default 9,999,999 limit.
  *
  * ============================================================================
- * Changelog (Historial de cambios)
+ * Changelog
  * ============================================================================
  *
  * Version 1.04:
