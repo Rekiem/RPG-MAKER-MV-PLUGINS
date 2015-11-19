@@ -14,7 +14,7 @@ Yanfly.BEC = Yanfly.BEC || {};
  /*:
  * @plugindesc Tenga mas control sobre el flujo del sistema de batalla
  * con este plugin y altere varios aspectos a su gusto.
- * @author Yanfly Engine Plugins - (es) v1.16
+ * @author Yanfly Engine Plugins - (es) v1.17
  *
  * @param ---General---
  * @default
@@ -226,6 +226,11 @@ Yanfly.BEC = Yanfly.BEC || {};
  * @desc Comienza un turno con la ventana de comando del actor 
  * en vez de Party.  APAGADO - false     ENCENDIDO - true
  * @default true
+ *
+ * @param Current Max
+ * @desc Mostrar todo el valor / maximo actual de HP/MP?
+ * NO - false     SI - true     Por defecto: true
+ * @default false
  *
  * @param ---Selection Help(Seleccion de Ayuda)---
  * @default
@@ -575,6 +580,12 @@ Yanfly.BEC = Yanfly.BEC || {};
  * Changelog
  * ============================================================================
  *
+ * Version 1.17: (Implementada)
+ * - Fixed a visual error with flinching sprites.
+ * - Added 'Current Max' parameter to change HP current/max display in battle.
+ * - Mechanic change for states that update on Action End to end at the end of
+ * a battler's turn instead of at the start.
+ * 
  * Version 1.16:  (Implementada)
  * - Fixed an issue with mirrored enemies having mirrored state icons.
  *
@@ -697,6 +708,7 @@ Yanfly.Param.BECSurpText = String(Yanfly.Parameters['Show Surprise Text']);
 Yanfly.Param.BECPopupOverlap = String(Yanfly.Parameters['Popup Overlap Rate']);
 Yanfly.Param.BECNewPopBottom = String(Yanfly.Parameters['Newest Popup Bottom']);
 Yanfly.Param.BECStartActCmd = String(Yanfly.Parameters['Start Actor Command']);
+Yanfly.Param.BECCurMax = eval(String(Yanfly.Parameters['Current Max']));
 Yanfly.Param.BECSelectHelp = String(Yanfly.Parameters['Select Help Window']);
 Yanfly.Param.BECHelpUserTx = String(Yanfly.Parameters['User Help Text']);
 Yanfly.Param.BECHelpAllyTx = String(Yanfly.Parameters['Ally Help Text']);
@@ -1433,6 +1445,7 @@ BattleManager.endAction = function() {
       this._phase = this._preForcePhase;
     }
     this._processingForcedAction = false;
+    if (this._subject) this._subject.onAllActionsEnd();
     Yanfly.BEC.BattleManager_endAction.call(this);
 };
  
@@ -1479,7 +1492,6 @@ BattleManager.updateActionTargetList = function() {
  
 BattleManager.startAction = function() {
     var subject = this._subject;
-    subject.onAllActionsEnd();
     var action = subject.currentAction();
     this._action = action;
         var targets = action.makeTargets();
@@ -2132,7 +2144,8 @@ Sprite_Battler.prototype.stepBack = function() {
  
 Sprite_Battler.prototype.stepFlinch = function() {
     var flinchX = this.x - this._homeX - Yanfly.Param.BECFlinchDist;
-        this.startMove(flinchX, 0, 6);
+    var flinchY = this.y - this._homeY;
+        this.startMove(flinchX, flinchY, 6);
 };
  
 Sprite_Battler.prototype.stepSubBack = function() {
@@ -2267,7 +2280,8 @@ Sprite_Actor.prototype.stepForward = function() {
  
 Sprite_Actor.prototype.stepFlinch = function() {
         var flinchX = this.x - this._homeX + Yanfly.Param.BECFlinchDist;
-        this.startMove(flinchX, 0, 6);
+        var flinchY = this.y - this._homeY;
+        this.startMove(flinchX, flinchY, 6);
 };
  
 Sprite_Actor.prototype.stepSubBack = function() {
@@ -3870,6 +3884,20 @@ Window_BattleStatus.prototype.processStatusRefresh = function(index) {
     this.drawItem(index);
     actor.completetStatusRefreshRequest();
 };
+ 
+if (!Yanfly.Param.BECCurMax) {
+ 
+Window_BattleStatus.prototype.drawCurrentAndMax = function(current, max, x, y,
+                                                   width, color1, color2) {
+    var labelWidth = this.textWidth('HP');
+    var valueWidth = this.textWidth(Yanfly.Util.toGroup(max));
+    var slashWidth = this.textWidth('/');
+    var x1 = x + width - valueWidth;
+    this.changeTextColor(color1);
+    this.drawText(Yanfly.Util.toGroup(current), x1, y, valueWidth, 'right');
+};
+ 
+}; // Yanfly.Param.BECCurMax
  
 //=============================================================================
 // Window_BattleLog
